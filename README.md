@@ -1,1 +1,1 @@
-"# BabyFootScoreKeeper" 
+# BabyFootScoreKeeper
