@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://brieewpmt8ue4"]
+
+[ext_resource type="Script" path="res://scripts/gameManager.gd" id="1_wuc7a"]
+[ext_resource type="Script" path="res://addons/onscreenkeyboard/onscreen_keyboard.gd" id="2_j8mkr"]
+[ext_resource type="Texture2D" uid="uid://dbae0bavv1snb" path="res://icon.svg" id="3_5nt7t"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_wuc7a")
+
+[node name="OnscreenKeyboard" type="PanelContainer" parent="."]
+visible = false
+offset_right = 1147.0
+offset_bottom = 214.0
+script = ExtResource("2_j8mkr")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(501, 501)
+texture_normal = ExtResource("3_5nt7t")
+
+[node name="Label" type="Label" parent="TouchScreenButton"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Submit"
+
+[node name="BlueGoalie" type="LineEdit" parent="."]
+offset_left = 61.0
+offset_top = 59.0
+offset_right = 267.0
+offset_bottom = 111.0
+placeholder_text = "Blue goalie"
+
+[node name="BlueAttack" type="LineEdit" parent="."]
+offset_left = 347.0
+offset_top = 60.0
+offset_right = 553.0
+offset_bottom = 112.0
+placeholder_text = "Blue attack"
+
+[node name="RedGoalie" type="LineEdit" parent="."]
+offset_left = 624.0
+offset_top = 397.0
+offset_right = 830.0
+offset_bottom = 449.0
+placeholder_text = "Red goalie"
+
+[node name="RedAttack" type="LineEdit" parent="."]
+offset_left = 910.0
+offset_top = 398.0
+offset_right = 1116.0
+offset_bottom = 450.0
+placeholder_text = "Red attack"
+
+[node name="BlueScore" type="LineEdit" parent="."]
+offset_left = 316.0
+offset_top = 239.0
+offset_right = 522.0
+offset_bottom = 291.0
+placeholder_text = "Blue Score"
+
+[node name="RedScore" type="LineEdit" parent="."]
+offset_left = 602.0
+offset_top = 240.0
+offset_right = 808.0
+offset_bottom = 292.0
+placeholder_text = "Red Score"
+
+[connection signal="released" from="TouchScreenButton" to="." method="_on_touch_screen_button_released"]
