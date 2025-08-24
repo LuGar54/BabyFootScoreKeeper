@@ -1,6 +1,16 @@
 extends Node
 
 
+@export var blueGoalieLine: LineEdit
+@export var blueAttackLine: LineEdit
+@export var redGoalieLine: LineEdit
+@export var redAttackLine: LineEdit
+@export var blueScoreLine: LineEdit
+@export var redScoreLine: LineEdit
+@export var messagePanelText: Label
+@export var panel: Panel
+@export var panelContents: Node
+
 var currentPlayerText = ''
 
 # Called when the node enters the scene tree for the first time.
@@ -28,25 +38,24 @@ func submit_score(blue_goalie: String, blue_attack: String, red_goalie: String, 
 		#"red_score": %s
 	#}' % [blue_goalie, blue_attack, red_goalie, red_attack, blue_score, red_score]
 	var body = JSON.stringify({"blue_goalie": blue_goalie, "blue_attack": blue_attack, "red_goalie": red_goalie, "red_attack": red_attack, "blue_score": blue_score, "red_score": red_score})
-	http.request(FIREBASE_URL, headers, HTTPClient.METHOD_POST, body)
 	http.request_completed.connect(Callable(self, "_on_submit_completed"))
+	http.request(FIREBASE_URL, headers, HTTPClient.METHOD_POST, body)
 	#http.connect("request_completed", self, "_on_submit_completed")
 
 func _on_submit_completed(result, response_code, headers, body):
 	print("Submit response:", body.get_string_from_utf8())
-	$VBoxContainer/HBoxContainer/BlueGoalie.text = ""
-	$VBoxContainer/HBoxContainer/BlueAttack.text = ""
-	$VBoxContainer/HBoxContainer3/RedGoalie.text = ""
-	$VBoxContainer/HBoxContainer3/RedAttack.text = ""
-	$VBoxContainer/HBoxContainer2/BlueScore.text = ""
-	$VBoxContainer/HBoxContainer2/RedScore.text = ""
-	$Panel/PanelContents/Message.text = body.get_string_from_utf8()
+	blueGoalieLine.text = ""
+	blueAttackLine.text = ""
+	redGoalieLine.text = ""
+	redAttackLine.text = ""
+	blueScoreLine.text = ""
+	redScoreLine.text = ""
 	if response_code == 200:
-		$Panel/PanelContents/Message.text = "Score submitted successfully"
+		messagePanelText.text = "Score submitted successfully"
 	else:
-		$Panel/PanelContents/Message.text = str("Error submitting score: ", response_code)
+		messagePanelText.text = str("Error submitting score: ", response_code)
 		
-	$Panel/PanelContents.visible = true
+	panelContents.visible = true
 
 func fetch_scores() -> void:
 	var http = HTTPRequest.new()
@@ -64,15 +73,15 @@ func _on_scores_received(result, response_code, headers, body):
 
 func _on_touch_screen_button_released() -> void:
 	print("Touched")
-	var blue_goalie = $VBoxContainer/HBoxContainer/BlueGoalie.text
-	var blue_attack = $VBoxContainer/HBoxContainer/BlueAttack.text
-	var red_goalie = $VBoxContainer/HBoxContainer3/RedGoalie.text
-	var red_attack = $VBoxContainer/HBoxContainer3/RedAttack.text
-	var blue_score = int($VBoxContainer/HBoxContainer2/BlueScore.text)
-	var red_score = int($VBoxContainer/HBoxContainer2/RedScore.text)
+	var blue_goalie = blueGoalieLine.text
+	var blue_attack = blueAttackLine.text
+	var red_goalie = redGoalieLine.text
+	var red_attack = redAttackLine.text
+	var blue_score = int(blueScoreLine.text)
+	var red_score = int(redScoreLine.text)
 	submit_score(blue_goalie, blue_attack, red_goalie, red_attack, blue_score, red_score)
-	$Panel.visible = true
-	$Panel/PanelContents.visible = false
+	panel.visible = true
+	panelContents.visible = false
 	
 
 

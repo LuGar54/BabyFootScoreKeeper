@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2hv1a4bs0ano"]
+[gd_scene load_steps=8 format=3 uid="uid://d2hv1a4bs0ano"]
 
 [ext_resource type="Script" path="res://scripts/gameManager.gd" id="1_8vn7q"]
 [ext_resource type="Texture2D" uid="uid://bqs1gws4eeupr" path="res://images/Eo_circle_green_checkmark_smaller.png" id="2_efn6m"]
@@ -6,10 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://dnr0me8eew8p8" path="res://images/profile-icon-design-free-vector_100.jpg" id="3_tujxt"]
 [ext_resource type="Script" path="res://scripts/PlayerButton.gd" id="4_yirn2"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7rnfk"]
+bg_color = Color(0.0605304, 0.0605303, 0.0605304, 0.917647)
+
 [sub_resource type="LabelSettings" id="LabelSettings_cm0fy"]
 font_size = 50
 
-[node name="Ui" type="Control"]
+[node name="Ui" type="Control" node_paths=PackedStringArray("blueGoalieLine", "blueAttackLine", "redGoalieLine", "redAttackLine", "blueScoreLine", "redScoreLine", "messagePanelText", "panel", "panelContents")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +20,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_8vn7q")
+blueGoalieLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueGoalie")
+blueAttackLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueAttack")
+redGoalieLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedGoalie")
+redAttackLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedAttack")
+blueScoreLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/BlueScore")
+redScoreLine = NodePath("VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/RedScore")
+messagePanelText = NodePath("Panel/PanelContents/Message")
+panel = NodePath("Panel")
+panelContents = NodePath("Panel/PanelContents")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -26,15 +38,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 30
+current_tab = 1
+
+[node name="New Game" type="TabBar" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/New Game"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BlueGoalie" type="LineEdit" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("gameManager")]
+[node name="BlueGoalie" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("gameManager")]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -44,13 +75,13 @@ placeholder_text = "Blue goalie"
 max_length = 12
 expand_to_text_length = true
 script = ExtResource("2_q2fhl")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../../../..")
 
-[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BlueAttack" type="LineEdit" parent="VBoxContainer/HBoxContainer" node_paths=PackedStringArray("gameManager")]
+[node name="BlueAttack" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("gameManager")]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -60,37 +91,37 @@ placeholder_text = "Blue attack"
 max_length = 12
 expand_to_text_length = true
 script = ExtResource("2_q2fhl")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../../../..")
 
-[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/HBoxContainer"]
+[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BlueScore" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="BlueScore" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -100,11 +131,11 @@ placeholder_text = "Blue Score"
 max_length = 12
 expand_to_text_length = true
 
-[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RedScore" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="RedScore" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -114,31 +145,31 @@ placeholder_text = "Red Score"
 max_length = 12
 expand_to_text_length = true
 
-[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer4" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RedGoalie" type="LineEdit" parent="VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("gameManager")]
+[node name="RedGoalie" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("gameManager")]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -148,13 +179,13 @@ placeholder_text = "Red goalie"
 max_length = 12
 expand_to_text_length = true
 script = ExtResource("2_q2fhl")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../../../..")
 
-[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer5" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RedAttack" type="LineEdit" parent="VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("gameManager")]
+[node name="RedAttack" type="LineEdit" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("gameManager")]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -164,33 +195,122 @@ placeholder_text = "Red attack"
 max_length = 12
 expand_to_text_length = true
 script = ExtResource("2_q2fhl")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../../../..")
 
-[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/TabContainer/New Game/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer4"]
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 50
 icon = ExtResource("2_efn6m")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Stats" type="TabBar" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("gameManager")]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+placeholder_text = "Name"
+alignment = 1
+max_length = 15
+script = ExtResource("2_q2fhl")
+gameManager = NodePath("../../../../../..")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Win Count:"
+
+[node name="WinCount" type="Label" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "-"
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "Lose Count:"
+
+[node name="LoseCount" type="Label" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "-"
+
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/TabContainer/Stats/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 30
+text = " Go "
+
+[node name="Panel" type="Panel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.33
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer6" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="VBoxContainer/Panel/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -199,61 +319,69 @@ icon = ExtResource("3_tujxt")
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("4_yirn2")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../..")
 
-[node name="CenterContainer11" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer11" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
+[node name="Button2" type="Button" parent="VBoxContainer/Panel/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Mathieu"
 icon = ExtResource("3_tujxt")
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("4_yirn2")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../..")
 
-[node name="CenterContainer10" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer10" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
+[node name="Button3" type="Button" parent="VBoxContainer/Panel/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Adam"
 icon = ExtResource("3_tujxt")
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("4_yirn2")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../..")
 
-[node name="CenterContainer9" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer9" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
+[node name="Button4" type="Button" parent="VBoxContainer/Panel/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Andrew"
 icon = ExtResource("3_tujxt")
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("4_yirn2")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../..")
 
-[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer7" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button5" type="Button" parent="VBoxContainer/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
+[node name="Button5" type="Button" parent="VBoxContainer/Panel/HBoxContainer5" node_paths=PackedStringArray("gameManager")]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "Hugo"
 icon = ExtResource("3_tujxt")
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("4_yirn2")
-gameManager = NodePath("../../..")
+gameManager = NodePath("../../../..")
 
-[node name="CenterContainer8" type="CenterContainer" parent="VBoxContainer/HBoxContainer5"]
+[node name="CenterContainer8" type="CenterContainer" parent="VBoxContainer/Panel/HBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -265,6 +393,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7rnfk")
 
 [node name="PanelContents" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -297,16 +426,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Ok"
 
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/BlueGoalie" to="VBoxContainer/HBoxContainer/BlueGoalie" method="_on_focus_entered"]
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer/BlueAttack" to="VBoxContainer/HBoxContainer/BlueAttack" method="_on_focus_entered"]
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer2/BlueScore" to="VBoxContainer/HBoxContainer2/BlueScore" method="_on_focus_entered"]
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer2/RedScore" to="VBoxContainer/HBoxContainer2/RedScore" method="_on_focus_entered"]
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer3/RedGoalie" to="VBoxContainer/HBoxContainer3/RedGoalie" method="_on_focus_entered"]
-[connection signal="focus_entered" from="VBoxContainer/HBoxContainer3/RedAttack" to="VBoxContainer/HBoxContainer3/RedAttack" method="_on_focus_entered"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer4/Button" to="." method="_on_touch_screen_button_released"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer5/Button" to="VBoxContainer/HBoxContainer5/Button" method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer5/Button2" to="VBoxContainer/HBoxContainer5/Button2" method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer5/Button3" to="VBoxContainer/HBoxContainer5/Button3" method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer5/Button4" to="VBoxContainer/HBoxContainer5/Button4" method="_on_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer5/Button5" to="VBoxContainer/HBoxContainer5/Button5" method="_on_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueGoalie" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueGoalie" method="_on_focus_entered"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueAttack" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer/BlueAttack" method="_on_focus_entered"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/BlueScore" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/BlueScore" method="_on_focus_entered"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/RedScore" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer2/RedScore" method="_on_focus_entered"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedGoalie" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedGoalie" method="_on_focus_entered"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedAttack" to="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer3/RedAttack" method="_on_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/New Game/VBoxContainer/HBoxContainer4/Button" to="." method="_on_touch_screen_button_released"]
+[connection signal="focus_entered" from="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer/LineEdit" method="_on_focus_entered"]
+[connection signal="pressed" from="VBoxContainer/TabContainer/Stats/VBoxContainer/HBoxContainer2/Button" to="." method="fetch_scores"]
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer5/Button" to="VBoxContainer/Panel/HBoxContainer5/Button" method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer5/Button2" to="VBoxContainer/Panel/HBoxContainer5/Button2" method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer5/Button3" to="VBoxContainer/Panel/HBoxContainer5/Button3" method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer5/Button4" to="VBoxContainer/Panel/HBoxContainer5/Button4" method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Panel/HBoxContainer5/Button5" to="VBoxContainer/Panel/HBoxContainer5/Button5" method="_on_button_pressed"]
 [connection signal="pressed" from="Panel/PanelContents/HBoxContainer/CenterContainer2/Button" to="." method="_on_panel_button"]
